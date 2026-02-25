@@ -1,0 +1,210 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        
+        /* Warm Café Color Palette - Light Mode */
+        --background: 0.98 0.01 60;
+        --foreground: 0.2 0.02 30;
+        --card: 1 0 0;
+        --card-foreground: 0.2 0.02 30;
+        --popover: 1 0 0;
+        --popover-foreground: 0.2 0.02 30;
+        --primary: 0.65 0.18 40;
+        --primary-foreground: 1 0 0;
+        --secondary: 0.95 0.02 60;
+        --secondary-foreground: 0.2 0.02 30;
+        --muted: 0.95 0.02 60;
+        --muted-foreground: 0.5 0.02 30;
+        --accent: 0.95 0.02 60;
+        --accent-foreground: 0.2 0.02 30;
+        --destructive: 0.577 0.245 27.325;
+        --destructive-foreground: 0.985 0 0;
+        --border: 0.9 0.01 60;
+        --input: 0.9 0.01 60;
+        --ring: 0.65 0.18 40;
+        
+        /* Custom Café Colors */
+        --cream-50: 0.98 0.01 60;
+        --cream-100: 0.95 0.02 60;
+        --orange-400: 0.7 0.15 40;
+        --orange-500: 0.65 0.18 40;
+        --orange-600: 0.6 0.2 40;
+    }
+
+    .dark {
+        --background: 0.2 0.02 30;
+        --foreground: 0.98 0.01 60;
+        --card: 0.25 0.02 30;
+        --card-foreground: 0.98 0.01 60;
+        --popover: 0.25 0.02 30;
+        --popover-foreground: 0.98 0.01 60;
+        --primary: 0.7 0.15 40;
+        --primary-foreground: 0.2 0.02 30;
+        --secondary: 0.3 0.02 30;
+        --secondary-foreground: 0.98 0.01 60;
+        --muted: 0.3 0.02 30;
+        --muted-foreground: 0.7 0.02 30;
+        --accent: 0.35 0.02 30;
+        --accent-foreground: 0.98 0.01 60;
+        --destructive: 0.704 0.191 22.216;
+        --destructive-foreground: 0.2 0.02 30;
+        --border: 0.3 0.02 30;
+        --input: 0.3 0.02 30;
+        --ring: 0.7 0.15 40;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@layer utilities {
+    /* Glassmorphism Effects */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .dark .glass-card {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Premium Shadows */
+    .shadow-premium {
+        box-shadow: 
+            0 4px 6px -1px rgba(251, 146, 60, 0.1),
+            0 2px 4px -1px rgba(251, 146, 60, 0.06),
+            0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .shadow-premium-lg {
+        box-shadow: 
+            0 10px 15px -3px rgba(251, 146, 60, 0.2),
+            0 4px 6px -2px rgba(251, 146, 60, 0.1),
+            0 20px 40px -10px rgba(0, 0, 0, 0.15);
+    }
+    
+    .shadow-glow {
+        box-shadow: 
+            0 0 20px rgba(251, 146, 60, 0.4),
+            0 0 40px rgba(251, 146, 60, 0.2);
+    }
+    
+    .shadow-glow-lg {
+        box-shadow: 
+            0 0 30px rgba(251, 146, 60, 0.5),
+            0 0 60px rgba(251, 146, 60, 0.3);
+    }
+    
+    /* 3D Depth Effects */
+    .menu-card {
+        transform: translateZ(0);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .menu-card:hover {
+        transform: translateZ(10px) translateY(-5px);
+    }
+    
+    .feature-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 237, 213, 0.9) 100%);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(251, 146, 60, 0.2);
+        transform: translateZ(0);
+    }
+    
+    .gallery-item {
+        transform: translateZ(0);
+        will-change: transform;
+    }
+    
+    .review-card {
+        transform: translateZ(0);
+    }
+    
+    /* Button Styles */
+    .btn-primary {
+        background: linear-gradient(135deg, oklch(0.7 0.15 40) 0%, oklch(0.6 0.2 40) 100%);
+        border: none;
+    }
+    
+    .btn-secondary {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    /* Animations */
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in {
+        animation: fade-in 1s ease-out;
+    }
+    
+    /* Cream Color Utilities */
+    .bg-cream-50 {
+        background-color: oklch(var(--cream-50));
+    }
+    
+    .bg-cream-100 {
+        background-color: oklch(var(--cream-100));
+    }
+    
+    .from-cream-50 {
+        --tw-gradient-from: oklch(var(--cream-50));
+    }
+    
+    .to-cream-50 {
+        --tw-gradient-to: oklch(var(--cream-50));
+    }
+    
+    .from-cream-100 {
+        --tw-gradient-from: oklch(var(--cream-100));
+    }
+    
+    .to-cream-100 {
+        --tw-gradient-to: oklch(var(--cream-100));
+    }
+    
+    /* Hover Transitions */
+    * {
+        transition-property: transform, box-shadow, background-color, border-color, color;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+/* Performance Optimizations */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}

@@ -1,0 +1,44 @@
+{
+  "kind": "build_request",
+  "title": "Fix white screen crash in shopping cart system",
+  "projectName": "Healthy Yummy Bites",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-20",
+      "text": "Debug and fix the runtime error causing a white screen on load. Audit App.tsx, CartContext.tsx, CartPanel.tsx, CheckoutModal.tsx, and CartIcon.tsx for any JavaScript/TypeScript errors such as: missing or incorrect CartProvider wrapping in the component tree, context being consumed outside its provider, invalid destructuring of context values, missing default values in CartContext, import/export mismatches, or any unhandled exceptions during initial render. Ensure CartProvider wraps all components that consume CartContext in App.tsx or main.tsx (without modifying main.tsx or other immutable files). Add a fallback default context value so the app does not crash if context is accessed before the provider mounts.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "it is showing white screen only"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The page renders without a white screen on initial load",
+        "No unhandled JavaScript errors appear in the browser console on startup",
+        "CartContext is correctly provided to all components that consume it",
+        "All cart features (cart icon, CartPanel, CheckoutModal, Add to Cart buttons) function correctly after the fix",
+        "The app loads correctly on both desktop and mobile viewports"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify any files under frontend/src/hooks/ (immutable paths)",
+    "Do not modify frontend/src/main.tsx (immutable path)",
+    "Do not modify files under frontend/src/components/ui (immutable path)",
+    "Preserve all existing cart functionality: localStorage persistence, quantity controls, WhatsApp order submission, checkout form"
+  ],
+  "nonGoals": [
+    "Adding new features to the cart or checkout flow",
+    "Redesigning any UI components",
+    "Changing the WhatsApp order flow or message format",
+    "Backend changes"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

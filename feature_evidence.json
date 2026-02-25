@@ -1,0 +1,23 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-debug-and-fix-the-runtime-error-causing-a-white-screen-on-load-audit-app-tsx-cartcontext-tsx-cartpanel-tsx-checkoutmodal-tsx-and-carticon-tsx-for-any-javascript-typescript-errors-such-as-missing-or-incorrect-cartprovider-wrapping-in-the-component-tree-context-being-consumed-outside-its-provider-invalid-destructuring-of-context-values-missing-default-values-in-cartcontext-import-export-mismatches-or-any-unhandled-exceptions-during-initial-render-ensure-cartprovider-wraps-all-components-that-consume-cartcontext-in-app-tsx-or-main-tsx-without-modifying-main-tsx-or-other-immutable-files-add-a-fallback-default-context-value-so-the-app-does-not-crash-if-context-is-accessed-before-the-provider-mounts",
+      "featureTitle": "Debug and fix the runtime error causing a white screen on load. Audit App.tsx, CartContext.tsx, CartPanel.tsx, CheckoutModal.tsx, and CartIcon.tsx for any JavaScript/TypeScript errors such as: missing or incorrect CartProvider wrapping in the component tree, context being consumed outside its provider, invalid destructuring of context values, missing default values in CartContext, import/export mismatches, or any unhandled exceptions during initial render. Ensure CartProvider wraps all components that consume CartContext in App.tsx or main.tsx (without modifying main.tsx or other immutable files). Add a fallback default context value so the app does not crash if context is accessed before the provider mounts.",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-20"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix white screen crash in shopping cart system",
+  "requirements": [
+    {
+      "id": "REQ-20",
+      "summary": "Debug and fix the runtime error causing a white screen on load by auditing and fixing CartContext provider wrapping, context consumption patterns, default values, and any JavaScript/TypeScript errors in the cart system components",
+      "acceptanceCriteria": [
+        "The page renders without a white screen on initial load",
+        "No unhandled JavaScript errors appear in the browser console on startup",
+        "CartContext is correctly provided to all components that consume it",
+        "All cart features (cart icon, CartPanel, CheckoutModal, Add to Cart buttons) function correctly after the fix",
+        "The app loads correctly on both desktop and mobile viewports"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/contexts/CartContext.tsx",
+          "operation": "modify",
+          "description": "Add a safe default context value to prevent crashes if the context is accessed before CartProvider mounts. Ensure the context is exported correctly and all operations (add, remove, updateQuantity, clearCart) are properly defined with error handling. Verify the context value object structure matches what consumers expect (cart, totalItems, totalPrice, add operations)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap the entire component tree with CartProvider to ensure all cart-consuming components (CartIcon, CartPanel, MenuSection, CheckoutModal) have access to CartContext. Verify that CartProvider is imported correctly and wraps all child components. Check for any destructuring errors when consuming the context. Ensure all state management for cart panel and checkout modal visibility works correctly without causing render errors."
+        },
+        {
+          "path": "frontend/src/components/CartIcon.tsx",
+          "operation": "modify",
+          "description": "Audit the useCart hook usage and destructuring of context values. Add defensive checks to handle cases where totalItems might be undefined. Ensure the component safely renders when the cart is empty or context is initializing. Verify imports and exports match the CartContext implementation."
+        },
+        {
+          "path": "frontend/src/components/CartPanel.tsx",
+          "operation": "modify",
+          "description": "Review the cart context consumption pattern and ensure all destructured values (cart, remove, updateQuantity) are safely accessed. Add null/undefined checks for cart items. Verify that quantity controls and remove buttons don't trigger unhandled exceptions. Ensure the empty state renders correctly when cart array is empty."
+        },
+        {
+          "path": "frontend/src/components/MenuSection.tsx",
+          "operation": "modify",
+          "description": "Verify that the add-to-cart functionality correctly uses the CartContext add method. Ensure the visual confirmation state doesn't cause render errors. Check that the component handles both single-price and dual-price items without crashing. Add error boundaries or safe defaults if needed."
+        },
+        {
+          "path": "frontend/src/components/CheckoutModal.tsx",
+          "operation": "modify",
+          "description": "Audit form validation and submission logic to ensure no unhandled exceptions occur during initial render or form interaction. Verify that the modal safely handles cart data from context. Ensure onSubmit callback is properly defined and doesn't cause errors if cart is empty."
+        }
+      ]
+    }
+  ]
+}
