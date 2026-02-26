@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-debug-and-fix-the-runtime-error-causing-a-white-screen-on-load-audit-app-tsx-cartcontext-tsx-cartpanel-tsx-checkoutmodal-tsx-and-carticon-tsx-for-any-javascript-typescript-errors-such-as-missing-or-incorrect-cartprovider-wrapping-in-the-component-tree-context-being-consumed-outside-its-provider-invalid-destructuring-of-context-values-missing-default-values-in-cartcontext-import-export-mismatches-or-any-unhandled-exceptions-during-initial-render-ensure-cartprovider-wraps-all-components-that-consume-cartcontext-in-app-tsx-or-main-tsx-without-modifying-main-tsx-or-other-immutable-files-add-a-fallback-default-context-value-so-the-app-does-not-crash-if-context-is-accessed-before-the-provider-mounts",
-      "featureTitle": "Debug and fix the runtime error causing a white screen on load. Audit App.tsx, CartContext.tsx, CartPanel.tsx, CheckoutModal.tsx, and CartIcon.tsx for any JavaScript/TypeScript errors such as: missing or incorrect CartProvider wrapping in the component tree, context being consumed outside its provider, invalid destructuring of context values, missing default values in CartContext, import/export mismatches, or any unhandled exceptions during initial render. Ensure CartProvider wraps all components that consume CartContext in App.tsx or main.tsx (without modifying main.tsx or other immutable files). Add a fallback default context value so the app does not crash if context is accessed before the provider mounts.",
+      "featureId": "feature-update-the-whatsapp-order-message-formatter-in-frontend-src-utils-whatsapporder-ts-to-produce-a-message-in-exactly-the-following-structure-with-no-emojis-and-no-shortening-of-item-names-new-order-healthy-yummy-bites-customer-details-name-customer-name-phone-customer-phone-address-customer-full-address-order-items-quantity-x-full-item-name-price-total-amount-total-payment-method-cash-on-delivery-upi-rules-to-enforce-in-code-quantity-format-must-always-be-number-x-full-item-name-with-a-space-before-and-after-the-x-item-names-must-be-used-exactly-as-stored-in-menudata-ts-never-truncated-never-abbreviated-each-order-item-must-be-on-its-own-line-no-emojis-anywhere-in-the-message-the-message-header-must-be-new-order-healthy-yummy-bites-no-emoji-section-labels-must-be-plain-text-customer-details-order-items-total-amount-payment-method",
+      "featureTitle": "Update the WhatsApp order message formatter in `frontend/src/utils/whatsappOrder.ts` to produce a message in exactly the following structure, with no emojis and no shortening of item names:\n\n```\nNew Order - Healthy Yummy Bites\n\nCustomer Details\nName: {Customer Name}\nPhone: {Customer Phone}\nAddress: {Customer Full Address}\n\nOrder Items\n{quantity} x {Full Item Name} - ₹{price}\n...\n\nTotal Amount: ₹{total}\nPayment Method: Cash on Delivery / UPI\n```\n\nRules to enforce in code:\n- Quantity format must always be: `{number} x {Full Item Name}` — with a space before and after the `x`.\n- Item names must be used exactly as stored in `menuData.ts` — never truncated, never abbreviated.\n- Each order item must be on its own line.\n- No emojis anywhere in the message.\n- The message header must be `New Order - Healthy Yummy Bites` (no emoji).\n- Section labels must be plain text: `Customer Details`, `Order Items`, `Total Amount:`, `Payment Method:`.",
       "files": [
-        "frontend/src/App.tsx"
+        "frontend/src/utils/whatsappOrder.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -15,7 +15,25 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-20"
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-frontend-src-components-checkoutmodal-tsx-to-ensure-that-the-staff-confirmation-template-rendered-in-the-modal-copy-to-clipboard-content-uses-the-same-corrected-message-format-as-the-whatsapp-url-full-item-names-number-x-full-item-name-quantity-format-no-emojis-and-the-exact-section-structure-defined-in-req-1",
+      "featureTitle": "Update `frontend/src/components/CheckoutModal.tsx` to ensure that the staff confirmation template rendered in the modal (copy-to-clipboard content) uses the same corrected message format as the WhatsApp URL — full item names, `{number} x {Full Item Name}` quantity format, no emojis, and the exact section structure defined in REQ-1.",
+      "files": [
+        "frontend/src/components/CheckoutModal.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
       ],
       "confidence": "high"
     }

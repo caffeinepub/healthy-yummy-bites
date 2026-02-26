@@ -11,7 +11,7 @@ export default function AboutSection() {
           
           <div className="glass-card p-8 md:p-12 rounded-3xl shadow-premium mb-12">
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-              Healthy Yummy Bites is a modern café-style fast food spot in Apampur offering fresh burgers, wraps, pizzas, shakes, mojitos, and snacks made with quality ingredients and great taste.
+              Healthy Yummy Bites is a modern café-style fast food spot in Adampur offering fresh burgers, wraps, pizzas, shakes, mojitos, and snacks made with quality ingredients and great taste.
             </p>
           </div>
 

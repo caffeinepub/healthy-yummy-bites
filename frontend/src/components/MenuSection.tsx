@@ -55,14 +55,14 @@ export default function MenuSection() {
                     // Dual-price items (pizza): show two add-to-cart buttons
                     return (
                       <div key={index} className="p-3 rounded-xl hover:bg-orange-50/50 transition-colors duration-200">
-                        <span className="text-gray-700 font-medium block mb-2">{item.name}</span>
+                        <span className="text-gray-700 font-medium block mb-2 break-words">{item.name}</span>
                         <div className="flex gap-2 flex-wrap">
                           <button
                             onClick={() => handleAddToCart(`${item.name} (Small)`, item.priceSmall!)}
                             className={`flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 active:scale-95
                               ${addedMap[`${item.name.toLowerCase().replace(/\s+/g, '-')}-small`]
                                 ? 'bg-green-500 text-white'
-                                : 'bg-orange-100 text-orange-600 hover:bg-orange-500 hover:text-white'
+                                : 'bg-orange-500 text-white hover:bg-orange-600'
                               }`}
                           >
                             {addedMap[`${item.name.toLowerCase().replace(/\s+/g, '-')}-small`]
@@ -76,7 +76,7 @@ export default function MenuSection() {
                             className={`flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 active:scale-95
                               ${addedMap[`${item.name.toLowerCase().replace(/\s+/g, '-')}-large`]
                                 ? 'bg-green-500 text-white'
-                                : 'bg-orange-100 text-orange-600 hover:bg-orange-500 hover:text-white'
+                                : 'bg-orange-600 text-white hover:bg-orange-700'
                               }`}
                           >
                             {addedMap[`${item.name.toLowerCase().replace(/\s+/g, '-')}-large`]
@@ -95,9 +95,9 @@ export default function MenuSection() {
                       key={index}
                       className="flex justify-between items-center p-3 rounded-xl hover:bg-orange-50/50 transition-colors duration-200 gap-2"
                     >
-                      <span className="text-gray-700 font-medium flex-1 min-w-0">{item.name}</span>
+                      <span className="text-gray-700 font-medium flex-1 break-words">{item.name}</span>
                       <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className="text-orange-600 font-bold bg-orange-100 px-3 py-1 rounded-lg text-sm">
+                        <span className="text-orange-600 font-bold bg-orange-100 px-3 py-1 rounded-lg text-sm whitespace-nowrap">
                           {item.price}
                         </span>
                         <button

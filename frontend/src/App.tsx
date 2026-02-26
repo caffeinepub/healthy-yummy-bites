@@ -27,6 +27,11 @@ function AppContent() {
   function handleCheckoutSubmit(info: CustomerInfo) {
     const url = formatWhatsAppOrder(info, items, totalPrice);
     window.open(url, '_blank');
+    // Do NOT clear cart here — modal stays open to show confirmation
+    // Cart is cleared when user clicks Done (onClose)
+  }
+
+  function handleCheckoutClose() {
     clearCart();
     setIsCheckoutOpen(false);
     setIsCartOpen(false);
@@ -51,8 +56,10 @@ function AppContent() {
       />
       <CheckoutModal
         isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
+        onClose={handleCheckoutClose}
         onSubmit={handleCheckoutSubmit}
+        items={items}
+        totalPrice={totalPrice}
       />
     </div>
   );

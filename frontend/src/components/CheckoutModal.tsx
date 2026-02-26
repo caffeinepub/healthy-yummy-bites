@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { X, User, Phone, MapPin, CreditCard } from 'lucide-react';
+import { X, User, Phone, MapPin, CreditCard, Copy, Check } from 'lucide-react';
 import type { CustomerInfo } from '@/utils/whatsappOrder';
+import { buildOrderMessage } from '@/utils/whatsappOrder';
+import type { CartItem } from '@/contexts/CartContext';
 
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (info: CustomerInfo) => void;
+  items: CartItem[];
+  totalPrice: number;
 }
 
 interface FormErrors {
@@ -14,11 +18,14 @@ interface FormErrors {
   address?: string;
 }
 
-export default function CheckoutModal({ isOpen, onClose, onSubmit }: CheckoutModalProps) {
+export default function CheckoutModal({ isOpen, onClose, onSubmit, items, totalPrice }: CheckoutModalProps) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [submittedCustomer, setSubmittedCustomer] = useState<CustomerInfo | null>(null);
 
   if (!isOpen) return null;
 
@@ -35,8 +42,15 @@ export default function CheckoutModal({ isOpen, onClose, onSubmit }: CheckoutMod
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
-    onSubmit({ name: name.trim(), phone: phone.trim(), address: address.trim() });
-    // Reset form
+    const customer: CustomerInfo = {
+      name: name.trim(),
+      phone: phone.trim(),
+      address: address.trim(),
+    };
+    setSubmittedCustomer(customer);
+    setOrderPlaced(true);
+    onSubmit(customer);
+    // Reset form fields
     setName('');
     setPhone('');
     setAddress('');
@@ -45,7 +59,91 @@ export default function CheckoutModal({ isOpen, onClose, onSubmit }: CheckoutMod
 
   function handleClose() {
     setErrors({});
+    setOrderPlaced(false);
+    setCopied(false);
+    setSubmittedCustomer(null);
     onClose();
+  }
+
+  function handleCopyConfirmation() {
+    if (!submittedCustomer) return;
+    const message = buildOrderMessage(submittedCustomer, items, totalPrice);
+    navigator.clipboard.writeText(message).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
+  // After order is placed, show the order confirmation with copy button
+  if (orderPlaced && submittedCustomer) {
+    const confirmationMessage = buildOrderMessage(submittedCustomer, items, totalPrice);
+
+    return (
+      <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center">
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          onClick={handleClose}
+        />
+
+        {/* Modal */}
+        <div className="relative w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden animate-fade-in">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-green-500 to-green-600 px-6 py-5 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-bold text-white">Order Sent!</h2>
+              <p className="text-green-100 text-sm mt-0.5">WhatsApp opened with your order</p>
+            </div>
+            <button
+              onClick={handleClose}
+              aria-label="Close"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+            >
+              <X className="w-5 h-5 text-white" />
+            </button>
+          </div>
+
+          <div className="px-6 py-5 space-y-4">
+            {/* Staff Note */}
+            <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4">
+              <p className="text-xs font-bold text-orange-600 uppercase tracking-wider mb-2">
+                Staff Note: Order Summary
+              </p>
+              <pre className="text-gray-800 text-sm leading-relaxed whitespace-pre-wrap font-sans">
+                {confirmationMessage}
+              </pre>
+              <button
+                onClick={handleCopyConfirmation}
+                className={`mt-3 flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 active:scale-95
+                  ${copied
+                    ? 'bg-green-500 text-white'
+                    : 'bg-orange-500 text-white hover:bg-orange-600'
+                  }`}
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4" />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    Copy Message
+                  </>
+                )}
+              </button>
+            </div>
+
+            <button
+              onClick={handleClose}
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold shadow-glow hover:shadow-glow-lg hover:from-orange-600 hover:to-orange-700 active:scale-95 transition-all"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -161,7 +259,7 @@ export default function CheckoutModal({ isOpen, onClose, onSubmit }: CheckoutMod
               type="submit"
               className="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold shadow-glow hover:shadow-glow-lg hover:from-orange-600 hover:to-orange-700 active:scale-95 transition-all"
             >
-              ✅ Confirm Order
+              Confirm Order
             </button>
           </div>
         </form>

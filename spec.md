@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the white screen crash caused by a runtime error in the shopping cart system.
+**Goal:** Fix the WhatsApp order message format to use full item names, correct quantity formatting, no emojis, and consistent structure across both the WhatsApp URL and the checkout modal copy-to-clipboard content.
 
 **Planned changes:**
-- Audit `App.tsx`, `CartContext.tsx`, `CartPanel.tsx`, `CheckoutModal.tsx`, and `CartIcon.tsx` for JavaScript/TypeScript errors causing the white screen
-- Ensure `CartProvider` correctly wraps all components that consume `CartContext` in `App.tsx`
-- Add a fallback default context value to `CartContext` to prevent crashes if context is accessed before the provider mounts
-- Resolve any import/export mismatches, invalid destructuring, or unhandled exceptions during initial render
+- Update `frontend/src/utils/whatsappOrder.ts` to generate messages with the exact structure: header `New Order - Healthy Yummy Bites`, `Customer Details` section, `Order Items` section with `{number} x {Full Item Name} - ₹{price}` format per line, and `Total Amount:` / `Payment Method:` at the bottom — no emojis anywhere.
+- Ensure item names are always used exactly as defined in `menuData.ts` (never truncated or abbreviated) and quantity is always formatted as `{number} x` with spaces around the `x`.
+- Update `frontend/src/components/CheckoutModal.tsx` so the copy-to-clipboard staff confirmation text matches the same corrected message format.
 
-**User-visible outcome:** The app loads correctly without a white screen, and all cart features (cart icon, CartPanel, CheckoutModal, Add to Cart buttons) work as expected on both desktop and mobile.
+**User-visible outcome:** WhatsApp order messages and the checkout modal's copy-to-clipboard text will display clean, consistently formatted order summaries with full item names, proper quantity notation, and no emojis.

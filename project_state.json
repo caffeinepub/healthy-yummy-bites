@@ -1,250 +1,31 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 7,
-  "summary": "Premium modern restaurant website for Healthy Yummy Bites - a café-style fast food restaurant in Apampur, Punjab, India",
+  "projectStateVersion": 3,
+  "summary": "Food ordering app (Healthy Yummy Bites) with WhatsApp order integration, checkout flow, and mobile-friendly UI.",
   "architectural_notes": [
-    "Single-page restaurant website with smooth scrolling navigation",
-    "Mobile-first responsive design approach",
-    "WhatsApp integration for ordering (wa.me/919023031429)",
-    "Premium design system: warm café colors (cream, orange, black), glassmorphism effects, soft shadows, 3D depth",
-    "Google Maps embed for location display",
-    "Shopping cart uses localStorage for persistence across page reloads",
-    "Checkout sends formatted order details to WhatsApp (wa.me/919023031429) via URL"
+    "WhatsApp order message must use exact format: 'New Order - Healthy Yummy Bites', followed by customer details and order items. Quantity format: 'Number + space + x + space + Full Item Name - ₹Price'. No emojis. No shortened names. Each item on its own line."
   ],
-  "known_issues": [
-    "White screen on load — likely a runtime error in the shopping cart system (CartContext, CartPanel, or CheckoutModal)"
-  ],
+  "known_issues": [],
   "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-create-a-hero-section-with-business-name-healthy-yummy-bites-tagline-fresh-tasty-healthy-fast-food-food-imagery-background-and-two-animated-cta-buttons-order-on-whatsapp-linking-to-https-wa-me-919023031429-and-view-menu-scrolling-to-menu-section",
-      "title": "Create a hero section with business name 'Healthy Yummy Bites', tagline 'Fresh • Tasty • Healthy Fast Food', food imagery background, and two animated CTA buttons: 'Order on WhatsApp' linking to https://wa.me/919023031429 and 'View Menu' scrolling to menu section",
+      "id": "feature-update-the-whatsapp-order-message-formatter-in-frontend-src-utils-whatsapporder-ts-to-produce-a-message-in-exactly-the-following-structure-with-no-emojis-and-no-shortening-of-item-names-new-order-healthy-yummy-bites-customer-details-name-customer-name-phone-customer-phone-address-customer-full-address-order-items-quantity-x-full-item-name-price-total-amount-total-payment-method-cash-on-delivery-upi-rules-to-enforce-in-code-quantity-format-must-always-be-number-x-full-item-name-with-a-space-before-and-after-the-x-item-names-must-be-used-exactly-as-stored-in-menudata-ts-never-truncated-never-abbreviated-each-order-item-must-be-on-its-own-line-no-emojis-anywhere-in-the-message-the-message-header-must-be-new-order-healthy-yummy-bites-no-emoji-section-labels-must-be-plain-text-customer-details-order-items-total-amount-payment-method",
+      "title": "Update the WhatsApp order message formatter in `frontend/src/utils/whatsappOrder.ts` to produce a message in exactly the following structure, with no emojis and no shortening of item names:\n\n```\nNew Order - Healthy Yummy Bites\n\nCustomer Details\nName: {Customer Name}\nPhone: {Customer Phone}\nAddress: {Customer Full Address}\n\nOrder Items\n{quantity} x {Full Item Name} - ₹{price}\n...\n\nTotal Amount: ₹{total}\nPayment Method: Cash on Delivery / UPI\n```\n\nRules to enforce in code:\n- Quantity format must always be: `{number} x {Full Item Name}` — with a space before and after the `x`.\n- Item names must be used exactly as stored in `menuData.ts` — never truncated, never abbreviated.\n- Each order item must be on its own line.\n- No emojis anywhere in the message.\n- The message header must be `New Order - Healthy Yummy Bites` (no emoji).\n- Section labels must be plain text: `Customer Details`, `Order Items`, `Total Amount:`, `Payment Method:`.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-create-an-about-section-with-the-text-healthy-yummy-bites-is-a-modern-caf-style-fast-food-spot-in-apampur-offering-fresh-burgers-wraps-pizzas-shakes-mojitos-and-snacks-made-with-quality-ingredients-and-great-taste",
-      "title": "Create an About section with the text: 'Healthy Yummy Bites is a modern café-style fast food spot in Apampur offering fresh burgers, wraps, pizzas, shakes, mojitos, and snacks made with quality ingredients and great taste.'",
+      "id": "feature-update-frontend-src-components-checkoutmodal-tsx-to-ensure-that-the-staff-confirmation-template-rendered-in-the-modal-copy-to-clipboard-content-uses-the-same-corrected-message-format-as-the-whatsapp-url-full-item-names-number-x-full-item-name-quantity-format-no-emojis-and-the-exact-section-structure-defined-in-req-1",
+      "title": "Update `frontend/src/components/CheckoutModal.tsx` to ensure that the staff confirmation template rendered in the modal (copy-to-clipboard content) uses the same corrected message format as the WhatsApp URL — full item names, `{number} x {Full Item Name}` quantity format, no emojis, and the exact section structure defined in REQ-1.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
-    },
-    {
-      "id": "feature-create-a-comprehensive-menu-section-with-categorized-menu-items-displayed-in-visually-attractive-cards-with-icons-categories-include-shakes-cold-coffee-90-vanilla-100-chocolate-100-strawberry-100-pineapple-100-banana-100-butterscotch-100-blueberry-100-black-currant-100-oreo-shake-100-mojito-mint-60-peach-60-watermelon-60-passion-fruit-60-green-apple-60-lime-soda-40-masala-soda-40-coffee-small-30-large-50-burger-veg-burger-40-macroni-burger-50-spicy-cheese-burger-80-hyb-veg-special-burger-80-spicy-chicken-burger-80-hyb-special-chicken-burger-90-french-fries-classic-fries-80-peri-peri-fries-100-salad-veg-salad-80-paneer-salad-100-chicken-salad-120-wraps-aloo-tikki-60-paneer-70-chicken-patty-80-chicken-wrap-100-sandwich-cold-60-veg-grilled-70-paneer-tandoori-80-paneer-makhani-80-cheese-corn-80-chicken-tandoori-80-chicken-makhani-80-extra-cheese-20-pizza-onion-90-170-margherita-90-170-mix-veggies-100-180-cheese-corn-130-200-paneer-150-250-veg-loaded-170-280-chicken-170-280-and-spring-roll-1-piece-20-2-piece-40",
-      "title": "Create a comprehensive menu section with categorized menu items displayed in visually attractive cards with icons. Categories include: Shakes (Cold Coffee ₹90, Vanilla ₹100, Chocolate ₹100, Strawberry ₹100, Pineapple ₹100, Banana ₹100, Butterscotch ₹100, Blueberry ₹100, Black Currant ₹100, Oreo Shake ₹100), Mojito (Mint ₹60, Peach ₹60, Watermelon ₹60, Passion Fruit ₹60, Green Apple ₹60, Lime Soda ₹40, Masala Soda ₹40), Coffee (Small ₹30, Large ₹50), Burger (Veg Burger ₹40, Macroni Burger ₹50, Spicy Cheese Burger ₹80, HYB Veg Special Burger ₹80, Spicy Chicken Burger ₹80, HYB Special Chicken Burger ₹90), French Fries (Classic Fries ₹80, Peri Peri Fries ₹100), Salad (Veg Salad ₹80, Paneer Salad ₹100, Chicken Salad ₹120), Wraps (Aloo Tikki ₹60, Paneer ₹70, Chicken Patty ₹80, Chicken Wrap ₹100), Sandwich (Cold ₹60, Veg Grilled ₹70, Paneer Tandoori ₹80, Paneer Makhani ₹80, Cheese Corn ₹80, Chicken Tandoori ₹80, Chicken Makhani ₹80, Extra Cheese ₹20), Pizza (Onion ₹90/₹170, Margherita ₹90/₹170, Mix Veggies ₹100/₹180, Cheese Corn ₹130/₹200, Paneer ₹150/₹250, Veg Loaded ₹170/₹280, Chicken ₹170/₹280), and Spring Roll (1 Piece ₹20, 2 Piece ₹40)",
-      "reqIds": [
-        "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-gallery-section-displaying-high-quality-appetizing-food-images-for-burgers-pizza-shakes-wraps-and-fries",
-      "title": "Create a gallery section displaying high-quality appetizing food images for burgers, pizza, shakes, wraps, and fries",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-location-and-contact-section-displaying-address-apampur-punjab-phone-number-91-90230-31429-whatsapp-order-button-linking-to-https-wa-me-919023031429-hours-open-daily-and-a-google-maps-embed-placeholder",
-      "title": "Create a location and contact section displaying address '📍 Apampur, Punjab', phone number '📞 +91 90230 31429', WhatsApp order button linking to https://wa.me/919023031429, hours 'Open daily', and a Google Maps embed placeholder",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-customer-reviews-section-with-three-sample-5-star-reviews-best-burgers-and-shakes-in-the-area-affordable-prices-and-amazing-taste-and-perfect-place-for-snacks-and-coffee",
-      "title": "Create a customer reviews section with three sample 5-star reviews: 'Best burgers and shakes in the area!', 'Affordable prices and amazing taste.', and 'Perfect place for snacks and coffee.'",
-      "reqIds": [
-        "REQ-6"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-prominent-order-cta-section-with-heading-hungry-order-now-and-two-buttons-order-on-whatsapp-linking-to-https-wa-me-919023031429-and-call-now-linking-to-tel-919023031429",
-      "title": "Create a prominent Order CTA section with heading 'Hungry? Order Now!' and two buttons: 'Order on WhatsApp' linking to https://wa.me/919023031429 and 'Call Now' linking to tel:+919023031429",
-      "reqIds": [
-        "REQ-7"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-premium-design-system-with-warm-caf-colors-cream-orange-black-accents-soft-shadows-and-depth-effects-modern-typography-glassmorphism-effects-subtle-3d-depth-smooth-animations-on-scroll-and-hover-clean-spacing-and-premium-layout-throughout-the-entire-website",
-      "title": "Implement premium design system with warm café colors (cream, orange, black accents), soft shadows and depth effects, modern typography, glassmorphism effects, subtle 3D depth, smooth animations on scroll and hover, clean spacing, and premium layout throughout the entire website",
-      "reqIds": [
-        "REQ-8"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-mobile-first-responsive-design-with-fast-loading-clean-mobile-layout-sticky-order-button-visible-on-mobile-scroll-and-tap-to-call-functionality-enabled-for-phone-numbers",
-      "title": "Implement mobile-first responsive design with fast loading, clean mobile layout, sticky order button visible on mobile scroll, and tap-to-call functionality enabled for phone numbers",
-      "reqIds": [
-        "REQ-9"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-premium-footer-with-copyright-text-healthy-yummy-bites-and-tagline-fresh-taste-great-value",
-      "title": "Create a premium footer with copyright text '© Healthy Yummy Bites' and tagline 'Fresh Taste • Great Value'",
-      "reqIds": [
-        "REQ-10"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-smooth-scrolling-throughout-the-website-hover-animations-on-interactive-elements-menu-card-shadows-and-subtle-3d-depth-effects-as-premium-touches",
-      "title": "Implement smooth scrolling throughout the website, hover animations on interactive elements, menu card shadows, and subtle 3D depth effects as premium touches",
-      "reqIds": [
-        "REQ-11"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-optimize-page-metadata-and-content-for-local-seo-targeting-keywords-healthy-yummy-bites-apampur-best-cafe-in-apampur-best-fast-food-in-apampur-and-burger-pizza-cafe-punjab",
-      "title": "Optimize page metadata and content for local SEO targeting keywords: 'Healthy Yummy Bites Apampur', 'Best cafe in Apampur', 'Best fast food in Apampur', and 'Burger pizza cafe Punjab'",
-      "reqIds": [
-        "REQ-12"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-cartcontext-react-context-localstorage-persistence-that-stores-cart-items-item-name-price-quantity-exposes-addtocart-removefromcart-updatequantity-clearcart-and-computed-totalprice-and-totalitems-persist-cart-state-to-localstorage-under-key-hyb-cart-so-it-survives-page-reloads",
-      "title": "Create a CartContext (React context + localStorage persistence) that stores cart items (item name, price, quantity), exposes addToCart, removeFromCart, updateQuantity, clearCart, and computed totalPrice and totalItems. Persist cart state to localStorage under key 'hyb-cart' so it survives page reloads.",
-      "reqIds": [
-        "REQ-13"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-an-add-to-cart-button-below-each-menu-item-in-menusection-tsx-when-clicked-the-item-name-and-price-is-added-to-the-cart-via-cartcontext-if-the-item-already-exists-in-the-cart-increment-its-quantity-by-1-style-the-button-consistently-with-the-existing-premium-warm-cafe-design-system-orange-accent-color-rounded-hover-animation",
-      "title": "Add an 'Add to Cart' button below each menu item in MenuSection.tsx. When clicked, the item (name and price) is added to the cart via CartContext. If the item already exists in the cart, increment its quantity by 1. Style the button consistently with the existing premium warm cafe design system (orange accent color, rounded, hover animation).",
-      "reqIds": [
-        "REQ-14"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-a-persistent-cart-icon-button-in-the-top-right-corner-of-the-page-fixed-position-visible-on-both-desktop-and-mobile-display-a-red-badge-showing-the-total-number-of-items-in-the-cart-the-badge-should-hide-when-the-cart-is-empty-clicking-the-icon-opens-the-cart-panel",
-      "title": "Add a persistent cart icon button in the top-right corner of the page (fixed position, visible on both desktop and mobile). Display a red badge showing the total number of items in the cart. The badge should hide when the cart is empty. Clicking the icon opens the cart panel.",
-      "reqIds": [
-        "REQ-15"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-cartpanel-component-slide-in-drawer-or-modal-overlay-that-opens-when-the-cart-icon-is-clicked-it-must-display-a-list-of-all-cart-items-with-name-unit-price-and-quantity-quantity-controls-plus-and-minus-buttons-per-item-that-update-the-cart-a-remove-button-per-item-the-running-total-price-in-rupees-and-a-place-order-button-at-the-bottom-an-empty-state-message-should-be-shown-when-the-cart-has-no-items-style-with-glassmorphism-and-warm-cafe-color-palette",
-      "title": "Create a CartPanel component (slide-in drawer or modal overlay) that opens when the cart icon is clicked. It must display: a list of all cart items with name, unit price, and quantity; quantity controls (plus and minus buttons) per item that update the cart; a remove button per item; the running total price in rupees; and a 'Place Order' button at the bottom. An empty state message should be shown when the cart has no items. Style with glassmorphism and warm cafe color palette.",
-      "reqIds": [
-        "REQ-16"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-checkoutmodal-component-that-opens-as-a-popup-when-the-place-order-button-is-clicked-the-form-must-collect-name-text-input-phone-number-tel-input-address-textarea-and-payment-method-read-only-field-pre-set-to-cash-on-delivery-include-confirm-order-and-cancel-buttons-validate-that-name-phone-and-address-are-non-empty-before-submission-style-with-glassmorphism-overlay-matching-the-premium-design-system",
-      "title": "Create a CheckoutModal component that opens as a popup when the 'Place Order' button is clicked. The form must collect: Name (text input), Phone Number (tel input), Address (textarea), and Payment Method (read-only field pre-set to 'Cash on Delivery'). Include 'Confirm Order' and 'Cancel' buttons. Validate that Name, Phone, and Address are non-empty before submission. Style with glassmorphism overlay matching the premium design system.",
-      "reqIds": [
-        "REQ-17"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-on-checkout-form-submission-construct-a-whatsapp-message-pre-filled-with-the-order-details-and-open-it-via-https-wa-me-919023031429-the-message-must-follow-this-format-new-order-name-name-phone-phone-address-address-items-quantity-x-itemname-rs-linetotal-each-total-rs-totalprice-payment-cash-on-delivery-after-opening-the-whatsapp-link-clear-the-cart-via-clearcart-and-close-both-the-checkoutmodal-and-cartpanel",
-      "title": "On checkout form submission, construct a WhatsApp message pre-filled with the order details and open it via https://wa.me/919023031429. The message must follow this format: 'New Order: Name: {name}, Phone: {phone}, Address: {address}, Items: {quantity} x {itemName} - Rs{lineTotal} each, Total: Rs{totalPrice}, Payment: Cash on Delivery'. After opening the WhatsApp link, clear the cart via clearCart and close both the CheckoutModal and CartPanel.",
-      "reqIds": [
-        "REQ-18"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-ensure-the-entire-shopping-cart-system-cart-icon-cartpanel-drawer-checkoutmodal-is-fully-mobile-responsive-the-cartpanel-should-be-a-full-width-bottom-sheet-or-side-drawer-on-mobile-the-checkoutmodal-should-be-full-screen-on-small-viewports-all-touch-targets-buttons-quantity-controls-must-be-at-least-44x44px-the-cart-icon-badge-must-be-clearly-visible-on-small-screens",
-      "title": "Ensure the entire shopping cart system (cart icon, CartPanel drawer, CheckoutModal) is fully mobile responsive. The CartPanel should be a full-width bottom sheet or side drawer on mobile. The CheckoutModal should be full-screen on small viewports. All touch targets (buttons, quantity controls) must be at least 44x44px. The cart icon badge must be clearly visible on small screens.",
-      "reqIds": [
-        "REQ-19"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-debug-and-fix-the-runtime-error-causing-a-white-screen-on-load-audit-app-tsx-cartcontext-tsx-cartpanel-tsx-checkoutmodal-tsx-and-carticon-tsx-for-any-javascript-typescript-errors-such-as-missing-or-incorrect-cartprovider-wrapping-in-the-component-tree-context-being-consumed-outside-its-provider-invalid-destructuring-of-context-values-missing-default-values-in-cartcontext-import-export-mismatches-or-any-unhandled-exceptions-during-initial-render-ensure-cartprovider-wraps-all-components-that-consume-cartcontext-in-app-tsx-or-main-tsx-without-modifying-main-tsx-or-other-immutable-files-add-a-fallback-default-context-value-so-the-app-does-not-crash-if-context-is-accessed-before-the-provider-mounts",
-      "title": "Debug and fix the runtime error causing a white screen on load. Audit App.tsx, CartContext.tsx, CartPanel.tsx, CheckoutModal.tsx, and CartIcon.tsx for any JavaScript/TypeScript errors such as: missing or incorrect CartProvider wrapping in the component tree, context being consumed outside its provider, invalid destructuring of context values, missing default values in CartContext, import/export mismatches, or any unhandled exceptions during initial render. Ensure CartProvider wraps all components that consume CartContext in App.tsx or main.tsx (without modifying main.tsx or other immutable files). Add a fallback default context value so the app does not crash if context is accessed before the provider mounts.",
-      "reqIds": [
-        "REQ-20"
-      ],
-      "version": 1
     }
   ],
-  "new_feature_requests": [
-    {
-      "id": "AR-1",
-      "summary": "Hero section with logo, tagline, food imagery background, and WhatsApp/Menu CTA buttons",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "About section with business introduction",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Menu section with categorized items (Shakes, Mojito, Coffee, Burger, Fries, Salad, Wraps, Sandwich, Pizza, Spring Roll) with prices",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Gallery section with appetizing food images (burgers, pizza, shakes, wraps, fries)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Location & Contact section with address, phone, WhatsApp button, hours, and Google Maps embed",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Customer reviews section with sample 5-star reviews",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-7",
-      "summary": "Order CTA section with WhatsApp and Call Now buttons",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-8",
-      "summary": "Premium design with warm café colors, glassmorphism, 3D depth, smooth animations, and hover effects",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-9",
-      "summary": "Mobile optimization with fast loading, sticky order button, and tap-to-call",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-10",
-      "summary": "Local SEO optimization for Apampur cafe and fast food searches",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-11",
-      "summary": "Shopping cart system: Add to Cart buttons on each menu item, cart icon with item count in top-right, cart panel with quantity controls and total price, Place Order button, checkout form popup (Name, Phone, Address, Cash on Delivery), WhatsApp order submission with cart details, cart clear after order, localStorage persistence, fully mobile responsive",
-      "reqIds": [],
-      "status": "pending"
-    }
-  ],
+  "new_feature_requests": [],
   "gameProjectType": "none",
   "projectName": "Healthy Yummy Bites",
   "clarification_mode": "instant",

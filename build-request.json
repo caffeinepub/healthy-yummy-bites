@@ -1,41 +1,65 @@
 {
   "kind": "build_request",
-  "title": "Fix white screen crash in shopping cart system",
+  "title": "Fix WhatsApp order message format",
   "projectName": "Healthy Yummy Bites",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-20",
-      "text": "Debug and fix the runtime error causing a white screen on load. Audit App.tsx, CartContext.tsx, CartPanel.tsx, CheckoutModal.tsx, and CartIcon.tsx for any JavaScript/TypeScript errors such as: missing or incorrect CartProvider wrapping in the component tree, context being consumed outside its provider, invalid destructuring of context values, missing default values in CartContext, import/export mismatches, or any unhandled exceptions during initial render. Ensure CartProvider wraps all components that consume CartContext in App.tsx or main.tsx (without modifying main.tsx or other immutable files). Add a fallback default context value so the app does not crash if context is accessed before the provider mounts.",
+      "id": "REQ-1",
+      "text": "Update the WhatsApp order message formatter in `frontend/src/utils/whatsappOrder.ts` to produce a message in exactly the following structure, with no emojis and no shortening of item names:\n\n```\nNew Order - Healthy Yummy Bites\n\nCustomer Details\nName: {Customer Name}\nPhone: {Customer Phone}\nAddress: {Customer Full Address}\n\nOrder Items\n{quantity} x {Full Item Name} - ₹{price}\n...\n\nTotal Amount: ₹{total}\nPayment Method: Cash on Delivery / UPI\n```\n\nRules to enforce in code:\n- Quantity format must always be: `{number} x {Full Item Name}` — with a space before and after the `x`.\n- Item names must be used exactly as stored in `menuData.ts` — never truncated, never abbreviated.\n- Each order item must be on its own line.\n- No emojis anywhere in the message.\n- The message header must be `New Order - Healthy Yummy Bites` (no emoji).\n- Section labels must be plain text: `Customer Details`, `Order Items`, `Total Amount:`, `Payment Method:`.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-4"
         ],
         "quotes": [
-          "it is showing white screen only"
+          "Do NOT shorten item names.",
+          "Always write quantity with space: \"5 x\"",
+          "Always write FULL item name.",
+          "Keep message clean. No emojis.",
+          "Quantity format must always be: Number + space + x + space + Item Name"
         ]
       },
       "acceptanceCriteria": [
-        "The page renders without a white screen on initial load",
-        "No unhandled JavaScript errors appear in the browser console on startup",
-        "CartContext is correctly provided to all components that consume it",
-        "All cart features (cart icon, CartPanel, CheckoutModal, Add to Cart buttons) function correctly after the fix",
-        "The app loads correctly on both desktop and mobile viewports"
+        "The generated WhatsApp message starts with `New Order - Healthy Yummy Bites` and contains no emojis.",
+        "Every line item follows the format `{number} x {Full Item Name} - ₹{price}` — e.g. `5 x Paneer Wrap - ₹350`.",
+        "No item name is ever shortened or truncated (e.g. `Cold Coffee` never appears as `Cold`, `Paneer Wrap` never appears as `Paneer`).",
+        "Quantity is always written as `{number} x` with a space between the number, the `x`, and the item name — never as `5x` or `2x`.",
+        "Each item appears on its own separate line.",
+        "Customer name, phone, and full address are rendered correctly under the `Customer Details` section.",
+        "Total amount and payment method appear at the bottom of the message."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Update `frontend/src/components/CheckoutModal.tsx` to ensure that the staff confirmation template rendered in the modal (copy-to-clipboard content) uses the same corrected message format as the WhatsApp URL — full item names, `{number} x {Full Item Name}` quantity format, no emojis, and the exact section structure defined in REQ-1.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Format must be exactly as shown below.",
+          "Each item must be on a separate line."
+        ]
+      },
+      "acceptanceCriteria": [
+        "The copy-to-clipboard text in CheckoutModal matches the corrected WhatsApp message format exactly.",
+        "No truncated item names or `5x`-style quantities appear in the modal's order summary."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files under frontend/src/hooks/ (immutable paths)",
-    "Do not modify frontend/src/main.tsx (immutable path)",
-    "Do not modify files under frontend/src/components/ui (immutable path)",
-    "Preserve all existing cart functionality: localStorage persistence, quantity controls, WhatsApp order submission, checkout form"
+    "Do not change the backend.",
+    "Do not add emojis to the WhatsApp message.",
+    "Do not shorten or abbreviate any item names — always use the full name as defined in menuData.ts.",
+    "Do not edit any file under frontend/src/hooks/ or frontend/src/components/ui."
   ],
   "nonGoals": [
-    "Adding new features to the cart or checkout flow",
-    "Redesigning any UI components",
-    "Changing the WhatsApp order flow or message format",
-    "Backend changes"
+    "Adding UPI payment option to the checkout flow.",
+    "Changing any visual UI styling or layout.",
+    "Modifying menu data or item prices.",
+    "Any backend changes."
   ],
   "imageRequirements": {
     "required": [],

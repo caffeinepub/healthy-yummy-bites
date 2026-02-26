@@ -66,7 +66,7 @@ export const menuData: MenuCategory[] = [
     emoji: '🍔',
     items: [
       { name: 'Veg Burger', price: '₹40' },
-      { name: 'Macroni Burger', price: '₹50' },
+      { name: 'Macaroni Burger', price: '₹50' },
       { name: 'Spicy Cheese Burger', price: '₹80' },
       { name: 'HYB Veg Special Burger', price: '₹80' },
       { name: 'Spicy Chicken Burger', price: '₹80' },
